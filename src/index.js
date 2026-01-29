@@ -14,15 +14,30 @@ const logseq = window.logseq
 const logseqEditor = logseq.Editor
 
 const isInBrowser = process.env.REACT_APP_ENV === 'browser'
+
+// Settings schema
+const settingsSchema = [
+  {
+    key: 'keyboardShortcut',
+    type: 'string',
+    default: 'mod+shift+t',
+    title: 'Keyboard Shortcut',
+    description: 'Keyboard shortcut to open the table editor. Use "mod" for Cmd (Mac) or Ctrl (Windows/Linux). Examples: mod+shift+t, ctrl+alt+t, mod+e'
+  }
+]
+
 const bootEditor = (input, blockId) => {
   console.log('[faiz:] === Raw Input: \n', input)
   let tables = parseMarkdownTable(input)
   console.log('[faiz:] === markdownIt parse res', tables)
   renderApp(input, tables, blockId)
 }
+
 if (isInBrowser) {
   bootEditor(longTables, 111)
 } else {
+  logseq.useSettingsSchema(settingsSchema)
+
   logseq.ready().then(() => {
     logseq.App.getUserConfigs().then(configs => {
       i18n.changeLanguage(configs.preferredLanguage || 'en')
@@ -65,8 +80,25 @@ if (isInBrowser) {
           // console.log('[faiz:] === block content format to markdown table error')
         })
       }
+
+      const shortcutHandler = async () => {
+        const currentBlock = await logseqEditor.getCurrentBlock()
+        if (currentBlock) {
+          commandCallback({ uuid: currentBlock.uuid })
+        } else {
+          logseq.UI.showMsg(i18n.t('Please select a block first'), 'warning')
+        }
+      }
+
       logseqEditor.registerBlockContextMenuItem(i18n.t('Markdown Table Editor'), commandCallback)
       logseqEditor.registerSlashCommand('Markdown Table Editor', commandCallback)
+
+      // Register keyboard shortcut from settings
+      const shortcut = logseq.settings?.keyboardShortcut || 'mod+shift+t'
+      logseq.App.registerCommandShortcut(
+        { binding: shortcut },
+        shortcutHandler
+      )
 
       logseq.on('ui:visible:changed', (e) => {
         if (!e.visible) {

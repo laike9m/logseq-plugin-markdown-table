@@ -1,3 +1,11 @@
+# [1.9.0](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.8.1...v1.9.0) (2026-01-29)
+
+
+### Features
+
+* :sparkles: add draggable popup window and keyboard shortcuts ([8290f0c](https://github.com/haydenull/logseq-plugin-markdown-table/commit/8290f0c0692c41c32d978c766d40049a76c25a49))
+* :sparkles: add keyboard shortcut with customizable settings ([887e954](https://github.com/haydenull/logseq-plugin-markdown-table/commit/887e954ed637063a77f2c1c42423609a6a6d1744))
+
 ## [1.8.1](https://github.com/haydenull/logseq-plugin-markdown-table/compare/v1.8.0...v1.8.1) (2024-05-20)
 
 

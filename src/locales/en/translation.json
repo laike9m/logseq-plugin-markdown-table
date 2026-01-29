@@ -12,5 +12,6 @@
   "delete column": "delete column",
   "uuid error": "uuid error",
   "markdown table overwrite success": "markdown table overwrite success",
-  "markdown table overwrite error": "markdown table overwrite error"
+  "markdown table overwrite error": "markdown table overwrite error",
+  "Drag to move": "Drag to move"
 }
